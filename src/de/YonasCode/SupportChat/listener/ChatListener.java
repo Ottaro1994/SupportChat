@@ -13,6 +13,8 @@ public class ChatListener implements Listener {
 	
 	@EventHandler
 	public void onSupportChatEvent(AsyncPlayerChatEvent event) {
+		if(event.isCancelled()) return;
+		
 		boolean cancel = false;
 		String name = event.getPlayer().getName();
 		
