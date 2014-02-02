@@ -8,6 +8,7 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import de.YonasCode.SupportChat.listener.ChatListener;
 import de.YonasCode.SupportChat.listener.LeaveListener;
@@ -17,7 +18,7 @@ public class SupportChat {
 
 	private HashMap<String, String> waitlist 		= new HashMap<String, String>();
 	private HashMap<String, String> undersupport	= new HashMap<String, String>();
-	private int TASK_ID;
+	private BukkitTask TASK_ID;
 	
 	public boolean isEmpty() {
 		return this.waitlist.isEmpty();
@@ -92,11 +93,9 @@ public class SupportChat {
 		this.waitlist.clear();
 	}
 	
-	@SuppressWarnings("deprecation")
 	private void startScheduler() {
-		this.TASK_ID = Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.INSTANCE, new Runnable() {
+		this.TASK_ID = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.INSTANCE, new Runnable() {
 
-			@Override
 			public void run() {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(p.hasPermission(Permission.SUPPORTCHAT_SEE))
@@ -108,7 +107,7 @@ public class SupportChat {
 	}
 	
 	private void stopScheduler() {
-		Bukkit.getScheduler().cancelTask(this.TASK_ID);
+		this.TASK_ID.cancel();
 	}
 	
 	public void addWaitlist(String player, String question) {
