@@ -8,5 +8,5 @@ commands:
      support:
           description: Support System Main Command.
           default: op
-          usage: /<command> [list, (accept, next), clear, leave, <message>]
+          usage: '/<command> "message"|list|accept [player]|clear|leave|close <player> [note]'
           aliases: support, ask

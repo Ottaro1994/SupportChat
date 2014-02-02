@@ -2,6 +2,7 @@ package de.YonasCode.SupportChat;
 
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -36,7 +37,10 @@ public class Main extends JavaPlugin {
 			Player pl = (Player)sender;
 			
 			if(cmd.getName().equalsIgnoreCase("support")) {
-				if((args.length == 1) && (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("accept") || args[0].equalsIgnoreCase("next") || args[0].equalsIgnoreCase("clear") || args[0].equalsIgnoreCase("leave"))) {
+				if((args.length >= 1) && (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("accept") || 
+					args[0].equalsIgnoreCase("clear") || args[0].equalsIgnoreCase("leave") || 
+					args[0].equalsIgnoreCase("close"))) 
+				{
 					//list
 					if(args[0].equalsIgnoreCase("list")) {
 						if(pl.hasPermission(Permission.SUPPORTCHAT_LIST)) {
@@ -60,13 +64,21 @@ public class Main extends JavaPlugin {
 					//list end
 					
 					//accept
-					if(args[0].equalsIgnoreCase("accept")) {
+					else if(args[0].equalsIgnoreCase("accept")) {
 						if(pl.hasPermission(Permission.SUPPORTCHAT_ACCEPT)) {
 							
 							if(!(sp.isEmpty())) {
 								if(!(sp.inChat(pl.getName()))) {
-									Player target = sp.getNextPlayer();
-									sp.putInChat(pl, target);
+									if (args.length >= 2) {
+										Player target = Bukkit.getPlayer(args[1]);
+										if (target != null && !target.equals(pl))
+											sp.putInChat(pl, target);
+										else
+											pl.sendMessage(Message.NOT_ON_WAITLIST);
+									} else {
+										Player target = sp.getNextPlayer();
+										sp.putInChat(pl, target);
+									}
 								} else {
 									pl.sendMessage(Message.ALREADY_IN_CHAT);
 								}
@@ -85,7 +97,7 @@ public class Main extends JavaPlugin {
 					//accept end
 					
 					//clear
-					if(args[0].equalsIgnoreCase("clear")) {
+					else if(args[0].equalsIgnoreCase("clear")) {
 						if(pl.hasPermission(Permission.SUPPORTCHAT_CLEAR)) {
 							sp.clearWaitlist();
 							pl.sendMessage(ChatColor.GREEN + "The waitlist is now empty.");
@@ -98,7 +110,7 @@ public class Main extends JavaPlugin {
 					//clear end
 					
 					//leave
-					if(args[0].equalsIgnoreCase("leave")) {
+					else if(args[0].equalsIgnoreCase("leave")) {
 						if(pl.hasPermission(Permission.SUPPORTCHAT_LEAVE)) {
 							if(sp.inChat(pl.getName())) {
 								if(sp.isSupporter(pl.getName())) {
@@ -116,6 +128,35 @@ public class Main extends JavaPlugin {
 						}
 					}
 					//leave end
+					
+					//close
+					else if(args[0].equalsIgnoreCase("close")) {
+						if(pl.hasPermission(Permission.SUPPORTCHAT_CLOSE)) {
+							if (args.length < 2)
+								return false;
+							
+							if (sp.removeClientFromWaitlist(args[1])) {
+								Player target = Bukkit.getPlayer(args[1]);
+								if (args.length >= 3) {
+									String txt = StringUtils.join(args, " ", 2, args.length);
+									target.sendMessage(Message.CLOSE_W_TEXT);
+									target.sendMessage(ChatColor.GOLD + "    " + txt);
+								} else {
+									target.sendMessage(Message.CLOSE_SIMPLE);
+								}
+								
+								pl.sendMessage(Message.INQUIRY_CLOSED);
+							} else {
+								pl.sendMessage(Message.NOT_ON_WAITLIST);
+							}
+							
+							return true;
+						} else {
+							pl.sendMessage(Message.NO_PERMISSIONS);
+							return true;
+						}
+					}
+					//close end
 					
 				} else {
 					

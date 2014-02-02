@@ -2,6 +2,7 @@ package de.YonasCode.SupportChat;
 
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -67,11 +68,15 @@ public class SupportChat {
 		} catch(ConcurrentModificationException  ex){}
 	}
 	
-	public void removeClientFromWaitlist(String player) {
+	public boolean removeClientFromWaitlist(String player) {
 		for(String p : this.waitlist.keySet()) {
-			if(p.equals(player))
+			if(p.equalsIgnoreCase(player)) {
 				this.waitlist.remove(p);
+				return true;
+			}
 		}
+		
+		return false;
 	}
 	
 	public void putInChat(Player supporter, Player client) {
@@ -126,7 +131,8 @@ public class SupportChat {
 	}
 	
 	public Player getNextPlayer() {
-		return Bukkit.getPlayer(this.waitlist.keySet().toArray()[0].toString());
+		Iterator<String> i = this.waitlist.keySet().iterator();
+		return Bukkit.getPlayer(i.next());
 	}
 	
 	public Player getClient(String player) {
