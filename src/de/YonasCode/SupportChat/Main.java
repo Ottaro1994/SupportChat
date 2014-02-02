@@ -186,9 +186,11 @@ public class Main extends JavaPlugin {
 								pl.sendMessage(Message.NO_PERMISSIONS);
 							}
 							return true;
-						} else {
+						} else if (args.length != 0) {
 							pl.sendMessage(Message.MORE_WORDS);
 							return true;
+						} else {
+							return false; // display help
 						}
 					//join end
 					
