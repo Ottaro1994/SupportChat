@@ -39,7 +39,7 @@ public class Main extends JavaPlugin {
 			if(cmd.getName().equalsIgnoreCase("support")) {
 				if((args.length >= 1) && (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("accept") || 
 					args[0].equalsIgnoreCase("clear") || args[0].equalsIgnoreCase("leave") || 
-					args[0].equalsIgnoreCase("close"))) 
+					args[0].equalsIgnoreCase("close") || args[0].equalsIgnoreCase("delete"))) 
 				{
 					//list
 					if(args[0].equalsIgnoreCase("list")) {
@@ -134,7 +134,7 @@ public class Main extends JavaPlugin {
 						if(pl.hasPermission(Permission.SUPPORTCHAT_CLOSE)) {
 							if (args.length < 2)
 								return false;
-							
+								
 							if (sp.removeClientFromWaitlist(args[1])) {
 								Player target = Bukkit.getPlayer(args[1]);
 								if (args.length >= 3) {
@@ -157,6 +157,23 @@ public class Main extends JavaPlugin {
 						}
 					}
 					//close end
+					
+					//delete
+					else if(args[0].equalsIgnoreCase("delete")){
+						if(pl.hasPermission(Permission.SUPPORTCHAT_DELETE)){
+							if (sp.removeClientFromWaitlist(pl.getName())) {
+										pl.sendMessage(Message.CLOSE_SIMPLE);
+										return true;
+									}
+									else {
+										 pl.sendMessage(Message.NOT_ON_WAITLIST);
+									}
+							}
+						}else{
+							pl.sendMessage(Message.NO_PERMISSIONS);
+						}
+					//delete end
+					
 					
 				} else {
 					

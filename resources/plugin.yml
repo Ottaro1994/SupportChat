@@ -1,6 +1,6 @@
 name: SupportChat
 author: YonasCode
-version: 1.0
+version: 1.0-SNAPSHOT
 description: Support Live Chat System.
 main: de.YonasCode.SupportChat.Main
 
@@ -8,5 +8,5 @@ commands:
      support:
           description: Support System Main Command.
           default: op
-          usage: '/<command> "message"|list|accept [player]|clear|leave|close <player> [note]'
+          usage: '/<command> "message"|list|accept [player]|clear|leave|close <player> [note]|delete'
           aliases: support, ask

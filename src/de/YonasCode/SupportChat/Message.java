@@ -18,5 +18,4 @@ public class Message {
 	public static final String INQUIRY_CLOSED	= ChatColor.GREEN + "Inquiry closed successfully.";
 	public static final String CLOSE_SIMPLE		= ChatColor.RED + "Your support inquiry was closed.";
 	public static final String CLOSE_W_TEXT		= ChatColor.RED + "Your support inquiry was closed with the following note or answer:";
-	
 }

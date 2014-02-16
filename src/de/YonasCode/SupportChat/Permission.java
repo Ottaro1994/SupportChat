@@ -9,5 +9,6 @@ public class Permission {
 	public static final String SUPPORTCHAT_JOIN 	= "supportchat.join";
 	public static final String SUPPORTCHAT_SEE		= "supportchat.see";
 	public static final String SUPPORTCHAT_CLOSE	= "supportchat.close";
+	public static final String SUPPORTCHAT_DELETE	= "supportchat.delete";
 	
 }
