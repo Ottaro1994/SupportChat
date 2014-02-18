@@ -2,6 +2,8 @@ package de.YonasCode.SupportChat.listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,14 +35,14 @@ public class ChatListener implements Listener {
 				Player client = Main.sp.getClient(name);
 				client.getPlayer().sendMessage(ChatColor.RED + event.getPlayer().getName() + ": " + ChatColor.AQUA + event.getMessage());
                 event.getPlayer().sendMessage(ChatColor.RED + event.getPlayer().getName() + ": " + ChatColor.AQUA + event.getMessage());
-                System.out.println(ChatColor.GOLD + "[SupportChat]" + ChatColor.RED + event.getPlayer().getName() + ": " + ChatColor.AQUA + event.getMessage());
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[SupportChat]" + ChatColor.RED + event.getPlayer().getName() + ": " + ChatColor.AQUA + event.getMessage());
 			}
 			//or if client
 			if(Main.sp.isClient(name)) {
 				Player supporter = Main.sp.getSupporter(name);
 				supporter.getPlayer().sendMessage(ChatColor.RED + event.getPlayer().getName() + ": " + ChatColor.AQUA + event.getMessage());
                 event.getPlayer().sendMessage(ChatColor.RED + event.getPlayer().getName() + ": " + ChatColor.AQUA + event.getMessage());
-                System.out.println(ChatColor.GOLD + "[SupportChat]" + ChatColor.RED + event.getPlayer().getName() + ": " + ChatColor.AQUA + event.getMessage());
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[SupportChat]" + ChatColor.RED + event.getPlayer().getName() + ": " + ChatColor.AQUA + event.getMessage());
 			}
 				
 		}
