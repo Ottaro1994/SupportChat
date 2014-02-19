@@ -19,6 +19,8 @@ public class SupportChat {
 
 	private HashMap<String, String> waitlist 		= new HashMap<String, String>();
 	private HashMap<String, String> undersupport	= new HashMap<String, String>();
+	private HashMap<String, Long> waitlisttime	    = new HashMap<String, Long>();
+	
 	private BukkitTask TASK_ID;
 	
 	public boolean isEmpty() {
@@ -72,6 +74,7 @@ public class SupportChat {
 		for(String p : this.waitlist.keySet()) {
 			if(p.equalsIgnoreCase(player)) {
 				this.waitlist.remove(p);
+				this.waitlisttime.remove(p);
 				return true;
 			}
 		}
@@ -87,15 +90,22 @@ public class SupportChat {
 			supporter.sendMessage(message.toString());
 			client.sendMessage(message.toString());
 		}
-		supporter.sendMessage(Message.TAG + ChatColor.GREEN + "You're now with the player " + ChatColor.GOLD + client.getName() + ChatColor.GREEN + " in a support chat. The player has following question: " + ChatColor.GOLD + getQuestion(client.getName()));
+		int time = ((int) (System.currentTimeMillis() - this.waitlisttime.get(client.getName()))/1000/60);
+		
+		supporter.sendMessage(Message.TAG + ChatColor.GREEN + "You're now with the player " + ChatColor.GOLD + client.getName() + ChatColor.GREEN + " in a support chat. The player has following question: " + ChatColor.GOLD + getQuestion(client.getName()) + ChatColor.GREEN + "Time Whait: " + ChatColor.RED + time + ChatColor.RED + " Minuten.");
 		client.sendMessage(Message.TAG + ChatColor.GREEN + "You're now with the supporter " + ChatColor.GOLD + supporter.getName() + ChatColor.GREEN + " in a support chat.");
 		try {
 			this.waitlist.remove(client.getName());
+			this.waitlisttime.remove(client.getName());
 		}catch(ConcurrentModificationException ex){}
 	}
 	
 	public void clearWaitlist() {
 		this.waitlist.clear();
+	}
+	
+	public void clearWaitlistTime(){
+		this.waitlisttime.clear();
 	}
 	
 	private void startScheduler() {
@@ -117,6 +127,10 @@ public class SupportChat {
 	
 	public void addWaitlist(String player, String question) {
 		this.waitlist.put(player, question);
+	}
+	
+	public void addWaitlistTime(String player, Long time) {
+		this.waitlisttime.put(player, time);
 	}
 	
 	public void leave(Player player) {

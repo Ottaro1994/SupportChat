@@ -100,6 +100,7 @@ public class Main extends JavaPlugin {
 					else if(args[0].equalsIgnoreCase("clear")) {
 						if(pl.hasPermission(Permission.SUPPORTCHAT_CLEAR)) {
 							sp.clearWaitlist();
+							sp.clearWaitlistTime();
 							pl.sendMessage(ChatColor.GREEN + "Die Warteliste ist nun leer.");
 							return true;
 						} else {
@@ -189,9 +190,10 @@ public class Main extends JavaPlugin {
 										for(Player p : Bukkit.getOnlinePlayers()) {
 											if(Variables.SEND_ALERT_MESSAGE)
 												if(p.hasPermission(Permission.SUPPORTCHAT_SEE))
-													p.sendMessage(Message.TAG + ChatColor.RED + "! " + ChatColor.UNDERLINE + "ALERT" + ChatColor.RESET + ChatColor.RED+ " ! - Ein neues Ticket ist verfÃ¼gbar.");
+													p.sendMessage(Message.TAG + ChatColor.RED + "! " + ChatColor.UNDERLINE + "ALERT" + ChatColor.RESET + ChatColor.RED+ " ! - Ein neues Ticket ist verfügbar.");
 										}
 										sp.addWaitlist(pl.getName(), question.toString());
+										sp.addWaitlistTime(pl.getName(), System.currentTimeMillis());
 										pl.sendMessage(Message.ADDED_WAITLIST);
 									} else {
 										pl.sendMessage(Message.ALREADY_IN_CHAT);

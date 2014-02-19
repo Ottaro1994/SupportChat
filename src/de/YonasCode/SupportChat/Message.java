@@ -5,8 +5,8 @@ import org.bukkit.ChatColor;
 public class Message {
 	
 	public static final String TAG 				= ChatColor.GOLD + "[" + ChatColor.AQUA + "SupportChat" + ChatColor.GOLD + "] ";
-	public static final String NO_PERMISSIONS 	= ChatColor.RED + "Du hast keine Rechte fÃ¼r diesen Befehl!";
-	public static final String MORE_WORDS		= ChatColor.RED + "Bitte gebe mehr WÃ¶rter ein.";
+	public static final String NO_PERMISSIONS 	= ChatColor.RED + "Du hast keine Rechte für diesen Befehl!";
+	public static final String MORE_WORDS		= ChatColor.RED + "Bitte gebe mehr Wörter ein.";
 	public static final String IN_WAITLIST		= ChatColor.RED + "Du bist bereits in die Warteliste.";
 	public static final String ADDED_WAITLIST 	= ChatColor.GREEN + "Du bist nun in der Warteliste. Bitte warte, bis sich ein Supporter bei dir meldet.";
 	public static final String ALREADY_IN_CHAT 	= ChatColor.RED + "Du bist bereits in einer Unterhaltung.";
