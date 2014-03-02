@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.YonasCode.SupportChat.listener.ChatListener;
+import de.YonasCode.SupportChat.listener.JoinListener;
 import de.YonasCode.SupportChat.listener.LeaveListener;
 
 public class SupportChat {
@@ -54,6 +55,7 @@ public class SupportChat {
 	public void setUp() {
 		Main.INSTANCE.getServer().getPluginManager().registerEvents(new ChatListener(), Main.INSTANCE);
 		Main.INSTANCE.getServer().getPluginManager().registerEvents(new LeaveListener(), Main.INSTANCE);
+		Main.INSTANCE.getServer().getPluginManager().registerEvents(new JoinListener(), Main.INSTANCE);
 		startScheduler();
 	}
 	
